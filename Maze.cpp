@@ -39,7 +39,7 @@ bool Maze::traverse(int row, int col)
 
    //DO THIS
    //test that the current grid location is a space (i.e. not a wall or already tried)
-   if (maze->getElement(row,col)!=WALL && maze->getElement(row,col)!=TRIED)
+   if (maze -> getElement(row, col) == SPACE)
    {
 
       //DO THIS
@@ -71,26 +71,11 @@ bool Maze::traverse(int row, int col)
          //don't use row++ or column++ use row + 1 or col + 1, etc.
          //IMPORTANT: make use of the boolean that is returned every time you call traverse
 
-		bool b1 = traverse(row,col+1);
-		bool b2 = traverse(row+1,col);
-		bool b3 = traverse(row-1,col);
-		bool b4 = traverse(row,col-1);
-		if(b1||b2||b3||b4){
-			done = true;
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
+		if(!done) done = traverse(row + 1, col);
+		if(!done) done = traverse(row, col + 1);
+		if(!done) done = traverse(row - 1, col);
+		if(!done) done = traverse(row, col - 1);
+		
       }
 
       //if we are done, on the way back recursively we must mark the path that we took as the solution path
@@ -99,7 +84,7 @@ bool Maze::traverse(int row, int col)
          //DO THIS
          //mark the path taken as the solution path
 
-		maze->setElement(row,col,PATH);
+		 maze->setElement(row,col,PATH);
 
          gui->update();
       }
@@ -108,7 +93,7 @@ bool Maze::traverse(int row, int col)
       {
          //DO THIS
 
-		maze->setElement(row,col,BACKTRACK);
+		 maze->setElement(row,col,BACKTRACK);
 
          Sleep(75);
          gui->update();
